@@ -4,7 +4,7 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./singlePost.css";
-
+import {postApi} from '../../api/post.ts'
 export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -21,6 +21,7 @@ export default function SinglePost() {
       setPost(res.data);
       setTitle(res.data.title);
       setDesc(res.data.desc);
+      console.log(process.env) 
     };
     getPost();
   }, [path]);
@@ -36,11 +37,18 @@ export default function SinglePost() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`/posts/${post._id}`, {
-        username: user.username,
-        title,
-        desc,
-      });
+      let payload = {
+        data:{
+          username: user.username,
+          title,
+          desc,
+
+        },
+        id: post._id
+       
+      }
+      await postApi.updatePost(payload)
+      // await axios.put(`/posts/${post._id}`, payload);
       setUpdateMode(false)
     } catch (err) {}
   };
