@@ -1,15 +1,15 @@
 import { ApiClient } from "./config";
 
-const postApi = {
+const userApi = {
   // getListElectronic: (payload) => {
   //     return ApiClient.post('electronic-items',payload);
   // },
   // getListBook: (payload) => {
   //     return ApiClient.post('book-search', payload);
   // }
-  updatePost: (payload: any) => {
-    return ApiClient.put(`posts/${payload.id}`, payload.data);
+  login: (payload: any) => {
+    return ApiClient.post(`auth/login`, payload);
   },
 };
 
-export { postApi };
+export { userApi };
