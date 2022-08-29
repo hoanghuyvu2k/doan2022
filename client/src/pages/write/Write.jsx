@@ -63,7 +63,8 @@ export default function Write() {
             onChange={e=>setDesc(e.target.value)}
           ></textarea>
         </div> */}
-        <RichEditor/>
+         <div className="writeFormGroup"><RichEditor/></div>
+        
         <button className="writeSubmit" type="submit">
           Publish
         </button>
