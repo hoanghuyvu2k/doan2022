@@ -2,19 +2,20 @@ import { useContext, useState } from "react";
 import "./write.css";
 import axios from "axios";
 import { Context } from "../../context/Context";
-import RichEditor from "components/RichEditor";
+import RichEditor from "components/RichEditor/RichEditor";
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [file, setFile] = useState(null);
   const { user } = useContext(Context);
-
+  const [content,setContent] = useState({})
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
       username: user.username,
       title,
       desc,
+      content
     };
     if (file) {
       const data =new FormData();
@@ -63,7 +64,7 @@ export default function Write() {
             onChange={e=>setDesc(e.target.value)}
           ></textarea>
         </div> */}
-         <div className="writeFormGroup"><RichEditor/></div>
+         <div className="writeFormGroup"><RichEditor  onChangeEditor = {e => setContent(e)}/></div>
         
         <button className="writeSubmit" type="submit">
           Publish

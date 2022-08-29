@@ -1,0 +1,11 @@
+.rich-editor{
+    border: 1px solid #CCCCCC;
+    min-height: 400px;
+    padding: 20px;
+}
+.disabled{
+    border: none;
+    .rdw-inline-wrapper{
+        display: none;
+    }
+} 
