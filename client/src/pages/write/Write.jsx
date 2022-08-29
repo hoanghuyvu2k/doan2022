@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import "./write.css";
 import axios from "axios";
 import { Context } from "../../context/Context";
-
+import RichEditor from "components/RichEditor";
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -55,14 +55,15 @@ export default function Write() {
             onChange={e=>setTitle(e.target.value)}
           />
         </div>
-        <div className="writeFormGroup">
+        {/* <div className="writeFormGroup">
           <textarea
             placeholder="Tell your story..."
             type="text"
             className="writeInput writeText"
             onChange={e=>setDesc(e.target.value)}
           ></textarea>
-        </div>
+        </div> */}
+        <RichEditor/>
         <button className="writeSubmit" type="submit">
           Publish
         </button>
