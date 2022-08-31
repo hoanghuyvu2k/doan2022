@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw } from "draft-js";
+import { EditorState, convertToRaw,convertFromRaw  } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./RichEditor.scss"
 export default function RichEditor(props) {
@@ -8,6 +8,10 @@ export default function RichEditor(props) {
     EditorState.createEmpty()
   );
   useEffect(() => {
+    if(props.value){
+      const content = convertFromRaw(props.value);
+      setEditorState(EditorState.createWithContent(content)) 
+    }
   }, []);
   const richEditorClass = () =>{
     let optionClass =  ''

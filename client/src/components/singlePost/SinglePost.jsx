@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./singlePost.css";
 import {postApi} from '../../api/post.ts'
+import RichEditor from "components/RichEditor/RichEditor";
 export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
@@ -102,7 +103,12 @@ export default function SinglePost() {
             onChange={(e) => setDesc(e.target.value)}
           />
         ) : (
-          <p className="singlePostDesc">{desc}</p>
+          <div>
+            <p className="singlePostDesc">{desc}</p>
+            <RichEditor  isReadOnly={true} value={post.content}/>
+          </div>
+          
+          
         )}
         {updateMode && (
           <button className="singlePostButton" onClick={handleUpdate}>
