@@ -4,25 +4,29 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./singlePost.css";
-import {postApi} from '../../api/post.ts'
+import { getUser } from "store/user/userSlice";
+import { useAppSelector, useAppDispatch } from "app/hooks";
+
+import { postApi } from "../../api/post.ts";
 import RichEditor from "components/RichEditor/RichEditor";
 export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [post, setPost] = useState({});
   const PF = "http://localhost:5000/images/";
-  const { user } = useContext(Context);
+  // const { user } = useContext(Context);
+  const user = useAppSelector(getUser);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [updateMode, setUpdateMode] = useState(false);
-
+  const [content, setContent] = useState("");
   useEffect(() => {
     const getPost = async () => {
       const res = await axios.get("/posts/" + path);
       setPost(res.data);
       setTitle(res.data.title);
       setDesc(res.data.desc);
-      console.log(process.env) 
+      setContent(res.data.content);
     };
     getPost();
   }, [path]);
@@ -39,18 +43,17 @@ export default function SinglePost() {
   const handleUpdate = async () => {
     try {
       let payload = {
-        data:{
+        data: {
           username: user.username,
           title,
           desc,
-
+          content,
         },
-        id: post._id
-       
-      }
-      await postApi.updatePost(payload)
+        id: post._id,
+      };
+      await postApi.updatePost(payload);
       // await axios.put(`/posts/${post._id}`, payload);
-      setUpdateMode(false)
+      setUpdateMode(false);
     } catch (err) {}
   };
 
@@ -97,18 +100,23 @@ export default function SinglePost() {
           </span>
         </div>
         {updateMode ? (
-          <textarea
-            className="singlePostDescInput"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
+          <div>
+            <textarea
+              className="singlePostDescInput"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+            />
+            <RichEditor
+              isReadOnly={false}
+              value={content}
+              onChangeEditor={(e) => setContent(e)}
+            />
+          </div>
         ) : (
           <div>
             <p className="singlePostDesc">{desc}</p>
-            <RichEditor  isReadOnly={true} value={post.content}/>
+            <RichEditor isReadOnly={true} value={content} />
           </div>
-          
-          
         )}
         {updateMode && (
           <button className="singlePostButton" onClick={handleUpdate}>

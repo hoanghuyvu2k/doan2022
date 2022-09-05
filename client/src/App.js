@@ -17,13 +17,11 @@ import {
 import { useContext, useEffect } from "react";
 import { Context } from "./context/Context";
 import routes from "router/routes";
-import { getUser } from "features/user/userSlice";
+import { getUser } from "store/user/userSlice";
 function App() {
   // const { user } = useContext(Context);
   const user = useAppSelector(getUser);
-  useEffect(() => {
-    console.log(process.env);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Router>

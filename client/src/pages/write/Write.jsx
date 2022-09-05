@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import "./write.css";
 import axios from "axios";
 import { Context } from "../../context/Context";
-import { getUser } from "features/user/userSlice";
+import { getUser } from "store/user/userSlice";
 import RichEditor from "components/RichEditor/RichEditor";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 export default function Write() {
@@ -12,17 +12,17 @@ export default function Write() {
   const user = useAppSelector(getUser);
 
   // const { user } = useContext(Context);
-  const [content,setContent] = useState({})
+  const [content, setContent] = useState({});
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
       username: user.username,
       title,
       desc,
-      content
+      content,
     };
     if (file) {
-      const data =new FormData();
+      const data = new FormData();
       const filename = Date.now() + file.name;
       data.append("name", filename);
       data.append("file", file);
@@ -33,7 +33,7 @@ export default function Write() {
     }
     try {
       const res = await axios.post("/posts", newPost);
-      window.location.replace("/post/" + res.data._id);
+      // window.location.replace("/post/" + res.data._id);
     } catch (err) {}
   };
   return (
@@ -57,7 +57,7 @@ export default function Write() {
             placeholder="Title"
             className="writeInput"
             autoFocus={true}
-            onChange={e=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="writeFormGroup">
@@ -65,11 +65,13 @@ export default function Write() {
             placeholder="Tell your story..."
             type="text"
             className="writeInput writeText"
-            onChange={e=>setDesc(e.target.value)}
+            onChange={(e) => setDesc(e.target.value)}
           ></textarea>
         </div>
-         <div className="writeFormGroup"><RichEditor  onChangeEditor = {e => setContent(e)}/></div>
-        
+        <div className="writeFormGroup">
+          <RichEditor onChangeEditor={(e) => setContent(e)} />
+        </div>
+
         <button className="writeSubmit" type="submit">
           Publish
         </button>

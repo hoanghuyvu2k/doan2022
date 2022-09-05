@@ -6,7 +6,7 @@ import "./login.css";
 import { useAppSelector, useAppDispatch } from 'app/hooks';
 import { userApi } from "api/user";
 import React from 'react'
-import { getIsFetching, loginFailure, loginStart, loginSuccess } from "features/user/userSlice";
+import { getIsFetching, loginFailure, loginStart, loginSuccess } from "store/user/userSlice";
 export default function Login() {
   const userRef =  React.useRef() as React.MutableRefObject<HTMLInputElement>;
   const passwordRef =  React.useRef() as React.MutableRefObject<HTMLInputElement>;

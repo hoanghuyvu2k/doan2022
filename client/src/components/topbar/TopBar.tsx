@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./topbar.css";
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { getUser } from "features/user/userSlice";
-import { logout} from "features/user/userSlice";
+import { getUser } from "store/user/userSlice";
+import { logout} from "store/user/userSlice";
 
 export default function TopBar() {
   const PF = "http://localhost:5000/images/"

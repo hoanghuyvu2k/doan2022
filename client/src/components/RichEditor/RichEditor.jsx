@@ -1,37 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw,convertFromRaw  } from "draft-js";
+import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "./RichEditor.scss"
+import "./RichEditor.scss";
 export default function RichEditor(props) {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
   useEffect(() => {
-    if(props.value){
+    if (props.value && props.isReadOnly == true) {
+      if (!props.value.entityMap) {
+        props.value.entityMap = {};
+      }
       const content = convertFromRaw(props.value);
-      setEditorState(EditorState.createWithContent(content)) 
+      setEditorState(EditorState.createWithContent(content));
     }
-  }, []);
-  const richEditorClass = () =>{
-    let optionClass =  ''
-    if(props.isReadOnly) optionClass = 'disabled'
-    return "rich-editor "+ optionClass 
-  }
-  const handleChangeEditor = (value) =>{
-    props.onChangeEditor(convertToRaw(value.getCurrentContent()))
-    setEditorState(value)
-  }
+  }, [props.value]);
+  const richEditorClass = () => {
+    let optionClass = "";
+    if (props.isReadOnly) optionClass = "disabled";
+    return "rich-editor " + optionClass;
+  };
+  const handleChangeEditor = (value) => {
+    props.onChangeEditor(convertToRaw(value.getCurrentContent()));
+    setEditorState(value);
+  };
   return (
     <div className={richEditorClass()}>
-        <Editor
-          editorState={editorState}
-          onEditorStateChange={handleChangeEditor}
-          readOnly={props.isReadOnly}
-        />
+      <Editor
+        editorState={editorState}
+        onEditorStateChange={handleChangeEditor}
+        readOnly={props.isReadOnly}
+      />
     </div>
   );
 }
-RichEditor.defaultProps={
-  isReadOnly:false
-}
+RichEditor.defaultProps = {
+  isReadOnly: false,
+};
