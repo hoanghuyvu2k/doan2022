@@ -8,9 +8,6 @@ import Settings from "../pages/settings/Settings";
 const Home = React.lazy(() => import("../pages/home/Home"));
 
 const routes = [
-  { path: "/", exact: true, name: "Home" },
-  { path: "/Home", name: "Home", component: Home, exact: true },
-  { path: "/Single", name: "Single", component: Single, exact: true },
   { path: "/Write", name: "Write", component: Write, exact: true },
   {
     path: "/Settings",

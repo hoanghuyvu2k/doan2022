@@ -6,6 +6,9 @@ import Settings from "./pages/settings/Settings";
 import Login from "./pages/login/Login.tsx";
 import Register from "./pages/register/Register";
 import { Counter } from "./features/counter/Counter.tsx";
+import DashBoard from "pages/admin/DashBoard";
+import "@coreui/coreui/dist/css/coreui.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import {
   BrowserRouter as Router,
@@ -17,7 +20,10 @@ import {
 import { useContext, useEffect } from "react";
 import { Context } from "./context/Context";
 import routes from "router/routes";
+import defaultRoutes from "router/defaultRoutes";
 import { getUser } from "store/user/userSlice";
+import "./scss/style.scss";
+
 function App() {
   // const { user } = useContext(Context);
   const user = useAppSelector(getUser);
@@ -25,13 +31,20 @@ function App() {
 
   return (
     <Router>
-      <TopBar />
       <Switch>
         <Route exact path="/">
-          <Home />
+          <TopBar /> <Home />
         </Route>
-        <Route path="/register">{user ? <Home /> : <Register />}</Route>
-        <Route path="/login">{user ? <Home /> : <Login />}</Route>
+        <Route path="/register">
+          {" "}
+          <TopBar />
+          {user ? <Home /> : <Register />}
+        </Route>
+        <Route path="/login">
+          {" "}
+          <TopBar />
+          {user ? <Home /> : <Login />}
+        </Route>
         <Route path="/counter">
           <Counter></Counter>
         </Route>
@@ -41,19 +54,26 @@ function App() {
           <Single />
         </Route> */}
         <Route path="/post/:postId">
+          <TopBar />
           <Single />
+        </Route>
+        <Route path="/dashboard">
+          <DashBoard />
         </Route>
         {user ? (
           routes.map((route, idx) => {
             return (
               route.component && (
-                <Route
-                  key={idx}
-                  path={route.path}
-                  exact={route.exact}
-                  name={route.name}
-                  render={(props) => <route.component {...props} />}
-                />
+                <>
+                  <TopBar />
+                  <Route
+                    key={idx}
+                    path={route.path}
+                    exact={route.exact}
+                    name={route.name}
+                    render={(props) => <route.component {...props} />}
+                  />
+                </>
               )
             );
           })
