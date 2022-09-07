@@ -6,3 +6,26 @@
 .header{
     margin-top: 0;
 }
+.list-content{
+    .icon-edit{
+        position: absolute;
+        right: 28px;
+        top: -28px;
+        color: green;
+        cursor: pointer;
+    }
+    .icon-delete{
+        position: absolute;
+        right: 10px;
+        top: -28px;
+        color: red;
+        cursor: pointer;
+    }
+    .show-more{
+        position: absolute;
+        bottom: 0;
+        right: 12px;
+        color: blue;
+        cursor: pointer;
+    }
+}
